@@ -1,4 +1,3 @@
-version: '3'
 services:
   results_view:
     build: LMS/Results_View_WebApp/
@@ -7,7 +6,7 @@ services:
     environment:
       - HOSTNAME=results_view
     volumes:
-      -
+      - ./LMS/Results_View_WebApp/frontend/.:/var/www/html/
     restart: always
   data_input:
     build: LMS/Data_Input_WebApp/
@@ -16,18 +15,18 @@ services:
     environment:
       - HOSTNAME=data_input
     volumes:
-      -
+      - ./LMS/Data_Input_WebApp/frontend:/var/www/html/
     restart: always
-  mysql:
-    build: LMS/MySQL_DB/
-    ports:
-      - "1433:1433"
-  mongoDB:
-    build: LMS/MongoDB/
-    ports: 
-  authentication_service:
-    build: LMS/Authentication_Service/
-    ports: 
-  analytics_service:
-    build: LMS/Analytics_Service/
-    ports: 
+  # mysql:
+  #   build: LMS/MySQL_DB/
+  #   ports:
+  #     - "1433:1433"
+  # mongoDB:
+  #   build: LMS/MongoDB/
+  #   ports: 
+  # authentication_service:
+  #   build: LMS/Authentication_Service/
+  #   ports: 
+  # analytics_service:
+  #   build: LMS/Analytics_Service/
+  #   ports: 
