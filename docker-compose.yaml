@@ -1,0 +1,33 @@
+version: '3'
+services:
+  results_view:
+    build: LMS/Results_View_WebApp/
+    ports:
+      - "8080:80"
+    environment:
+      - HOSTNAME=results_view
+    volumes:
+      -
+    restart: always
+  data_input:
+    build: LMS/Data_Input_WebApp/
+    ports:
+      - "8081:80"
+    environment:
+      - HOSTNAME=data_input
+    volumes:
+      -
+    restart: always
+  mysql:
+    build: LMS/MySQL_DB/
+    ports:
+      - "1433:1433"
+  mongoDB:
+    build: LMS/MongoDB/
+    ports: 
+  authentication_service:
+    build: LMS/Authentication_Service/
+    ports: 
+  analytics_service:
+    build: LMS/Analytics_Service/
+    ports: 
