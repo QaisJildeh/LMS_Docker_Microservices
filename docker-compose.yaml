@@ -8,6 +8,9 @@ services:
     volumes:
       - ./LMS/Results_View_WebApp/frontend/.:/var/www/html/
     restart: always
+    depends_on:
+      - mongoDB
+      - authentication_service
   data_input:
     build: LMS/Data_Input_WebApp/
     ports:
@@ -17,16 +20,33 @@ services:
     volumes:
       - ./LMS/Data_Input_WebApp/frontend:/var/www/html/
     restart: always
-  # mysql:
-  #   build: LMS/MySQL_DB/
-  #   ports:
-  #     - "1433:1433"
-  # mongoDB:
-  #   build: LMS/MongoDB/
-  #   ports: 
-  # authentication_service:
-  #   build: LMS/Authentication_Service/
-  #   ports: 
-  # analytics_service:
-  #   build: LMS/Analytics_Service/
-  #   ports: 
+    depends_on:
+      - mysql
+      - authentication_service
+  mysql:
+    build: LMS/MySQL_DB/
+    ports:
+      - "1433:1433"
+    environment:
+      environment:
+      - ACCEPT_EULA: Y
+      - SA_PASSWORD: yourStrong(!)Password
+      - MSSQL_PID: Express
+      - HOSTNAME=mysql
+    volumes:
+      - mysql-data:/var/lib/mysql
+  mongoDB:
+    build: LMS/MongoDB/
+    ports:
+      - "27017:27017" 
+    volumes:
+      - mongo-data:/data/db
+  authentication_service:
+    build: LMS/Authentication_Service/
+    ports: 
+  analytics_service:
+    build: LMS/Analytics_Service/
+    ports: 
+  volumes:
+    mysql-data:
+    mongo-data:
