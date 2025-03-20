@@ -43,10 +43,11 @@ services:
       - mongo-data:/data/db
   authentication_service:
     build: LMS/Authentication_Service/
-    ports: 
+    ports:
+      - "5001:5001"
   analytics_service:
     build: LMS/Analytics_Service/
-    ports: 
+    ports:
   volumes:
     mysql-data:
     mongo-data:
